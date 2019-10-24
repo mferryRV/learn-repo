@@ -1,0 +1,48 @@
+version: 2
+
+sources:
+  - name: airbnb
+    database: LEARN_RAW
+    schema: airbnb
+    tables:
+      - name: listings
+      - name: reviews
+
+models:
+  enabled: true
+  materialized: view
+
+models:
+  - name: stg_listings
+    description: This table contains rental home listings scraped from AirBnB.
+    columns:
+      - name: id
+        description: Unique AirBnB listing ID
+        tests:
+          - unique
+          - not_null
+      - name: host_id
+        description: Unique AirBnB host ID
+        tests:
+          - not_null
+
+
+  - name: stg_reviews
+    description: This table contains rental home reviews scraped from AirBnB.
+    columns:
+      - name: id
+        description: Unique AirBnB review ID
+        tests:
+          - unique
+          - not_null
+      - name: listing_id
+        description: Unique AirBnB listing ID tied to stg_listings table
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_listings')
+              field: id
+      - name: reviewer_id
+        description: Unique AirBnB reviewer ID
+        tests:
+          - not_null

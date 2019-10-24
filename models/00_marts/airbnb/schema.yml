@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  enabled: true
+  materialized: view
+
+models:
+  - name: dim_reviewers
+    description: This table contains rental home reviewers on AirBnB.
+    columns:
+      - name: id
+        description: Unique AirBnB reviwer ID
+        tests:
+          - unique
+          - not_null
+
+models:
+  - name: dim_hosts
+    description: This table contains rental home hosts on AirBnB.
+    columns:
+      - name: id
+        description: Unique AirBnB host ID
+        tests:
+          - unique
+          - not_null
